@@ -2,6 +2,33 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
+# Define a command.
+commands:
+  sync:
+    description: |
+      Syncs directories and prefixes.
+    parameters:
+      arguments:
+        default: ""
+        description: |
+          Optional additional arguments to pass to the sync command.
+        type: string
+    steps:
+      - run: |-
+          #!/bin/sh
+
+          ORB_STR_ARGUMENTS="$(echo <<parameters.arguments>> | circleci env subst)"
+
+          if [ -n "${ORB_STR_ARGUMENTS}" ];then
+            IFS=' '
+            set --
+            for arg in $(echo "${ORB_STR_ARGUMENTS}" | sed 's/,[ ]*/,/g');do
+            set -- "$@" "$arg"
+            done
+          fi
+
+          echo "$@"
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
@@ -17,12 +44,10 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-      - run:
-          name: "S3 Sync Sample"
-          command: |-
-            #!/bin/sh
-
-            echo "S3 Sync Sample"
+      - sync:
+          arguments: |
+            --cache-control "public,max-age=31536000,immutable" \
+            --exclude "index.html"
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
