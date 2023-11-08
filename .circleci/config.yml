@@ -14,22 +14,24 @@ commands:
           Optional additional arguments to pass to the sync command.
         type: string
     steps:
-      - run: |-
-          #!/bin/sh
-          
-          ORB_STR_ARGUMENTS=<<parameters.arguments>>
-          echo "${ORB_STR_ARGUMENTS}"
-          #ORB_STR_ARGUMENTS="$(echo "${ORB_STR_ARGUMENTS}" | circleci env subst)"
-
-          #if [ -n "${ORB_STR_ARGUMENTS}" ];then
-          #  IFS=' '
-            #  set --
-            #  for arg in $(echo "${ORB_STR_ARGUMENTS}" | sed 's/,[ ]*/,/g');do
-            #  set -- "$@" "$arg"
-            #  done
-            #fi
-
-          #echo "$@"
+      - run:
+          name: Test Sync
+          command: |-
+            #!/bin/sh
+            
+            echo "${ORB_STR_ARGUMENTS}"
+            ORB_STR_ARGUMENTS="$(echo "${ORB_STR_ARGUMENTS}" | circleci env subst)"
+            
+            if [ -n "${ORB_STR_ARGUMENTS}" ];then
+              IFS=' '
+              set --
+              for arg in $(echo "${ORB_STR_ARGUMENTS}" | sed 's/,[ ]*/,/g');do
+              set -- "$@" "$arg"
+              done
+            fi
+            echo "$@"
+          environment:
+            ORB_STR_ARGUMENTS: <<parameters.arguments>>
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
