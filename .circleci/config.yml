@@ -16,8 +16,9 @@ commands:
     steps:
       - run: |-
           #!/bin/sh
-
-          ORB_STR_ARGUMENTS="$(echo <<parameters.arguments>> | circleci env subst)"
+          
+          ORB_STR_ARGUMENTS=<<parameters.arguments>>
+          ORB_STR_ARGUMENTS="$(echo "${ORB_STR_ARGUMENTS}" | circleci env subst)"
 
           if [ -n "${ORB_STR_ARGUMENTS}" ];then
             IFS=' '
