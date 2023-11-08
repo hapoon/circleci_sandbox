@@ -18,17 +18,18 @@ commands:
           #!/bin/sh
           
           ORB_STR_ARGUMENTS=<<parameters.arguments>>
-          ORB_STR_ARGUMENTS="$(echo "${ORB_STR_ARGUMENTS}" | circleci env subst)"
+          echo "${ORB_STR_ARGUMENTS}"
+          #ORB_STR_ARGUMENTS="$(echo "${ORB_STR_ARGUMENTS}" | circleci env subst)"
 
-          if [ -n "${ORB_STR_ARGUMENTS}" ];then
-            IFS=' '
-            set --
-            for arg in $(echo "${ORB_STR_ARGUMENTS}" | sed 's/,[ ]*/,/g');do
-            set -- "$@" "$arg"
-            done
-          fi
+          #if [ -n "${ORB_STR_ARGUMENTS}" ];then
+          #  IFS=' '
+            #  set --
+            #  for arg in $(echo "${ORB_STR_ARGUMENTS}" | sed 's/,[ ]*/,/g');do
+            #  set -- "$@" "$arg"
+            #  done
+            #fi
 
-          echo "$@"
+          #echo "$@"
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
