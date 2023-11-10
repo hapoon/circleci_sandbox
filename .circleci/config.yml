@@ -56,7 +56,7 @@ jobs:
           name: "echo sample_env"
           command: |
             if [ $sample_env = "context" ];then
-              echo "Read from context"
+              echo "Read from Organization settings"
             else
               echo "Read from Enviroment variables"
             fi
