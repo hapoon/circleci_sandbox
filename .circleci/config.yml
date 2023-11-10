@@ -68,6 +68,14 @@ jobs:
                 echo "project_env is enabled"
               fi
             fi
+      - run:
+          name: "check organization_env"
+          command: |
+            if [ -n "${organization_env}" ];then
+              if [ "${organization_env}" = "organization_value" ];then
+                echo "organization_env is enabled"
+              fi
+            fi
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
