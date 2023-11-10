@@ -52,6 +52,9 @@ jobs:
           arguments: |
             --cache-control "public,max-age=31536000,immutable" \
             --exclude "index.html"
+      - run:
+          name: "echo sample_env"
+          command: "echo ${sample_env}"
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
