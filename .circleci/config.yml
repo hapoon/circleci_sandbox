@@ -60,15 +60,13 @@ jobs:
             else
               echo "Read from Enviroment variables"
             fi
-          context:
-            - circleci_sandbox_test
-
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
-
+      - say-hello:
+          context:
+            - circleci_sandbox_test
 
