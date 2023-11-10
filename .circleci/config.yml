@@ -60,6 +60,8 @@ jobs:
             else
               echo "Read from Enviroment variables"
             fi
+          context:
+            - circleci_sandbox_test
 
 
 # Orchestrate jobs using workflows
