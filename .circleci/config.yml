@@ -60,6 +60,14 @@ jobs:
             else
               echo "Read from Enviroment variables"
             fi
+      - run:
+          name: "check project_env"
+          command: |
+            if [ -n "${project_env}" ];then
+              if [ "${project_env}" = "project_value" ];then
+                echo "project_env is enabled"
+              fi
+            fi
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
