@@ -54,7 +54,13 @@ jobs:
             --exclude "index.html"
       - run:
           name: "echo sample_env"
-          command: "echo ${sample_env}"
+          command: |
+            if [ $sample_env = "context" ];then
+              echo "Read from context"
+            else
+              echo "Read from Enviroment variables"
+            fi
+
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
