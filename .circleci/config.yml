@@ -52,12 +52,37 @@ jobs:
           arguments: |
             --cache-control "public,max-age=31536000,immutable" \
             --exclude "index.html"
+      - run:
+          name: "echo sample_env"
+          command: |
+            if [ $sample_env = "context" ];then
+              echo "Read from Organization settings"
+            else
+              echo "Read from Enviroment variables"
+            fi
+      - run:
+          name: "check project_env"
+          command: |
+            if [ -n "${project_env}" ];then
+              if [ "${project_env}" = "project_value" ];then
+                echo "project_env is enabled"
+              fi
+            fi
+      - run:
+          name: "check organization_env"
+          command: |
+            if [ -n "${organization_env}" ];then
+              if [ "${organization_env}" = "organization_value" ];then
+                echo "organization_env is enabled"
+              fi
+            fi
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
-
+      - say-hello:
+          context:
+            - circleci_sandbox_test
 
